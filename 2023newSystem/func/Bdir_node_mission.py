@@ -88,7 +88,7 @@ class Routing_Node_CPU_New(Routing_Node_CPU):
         self.small_package_size = small_package_size  # 数据打包尺寸， -1为自动计算
         self.assi_nodes_num = assi_nodes_num
         self.max_pack_time_s = max_pack_time_s*processing_rate
-        self.unpack_recv_buffer = queue.Queue(recv_buf*3)
+        self.unpack_recv_buffer = queue.Queue(recv_buf*3*max(package_size, small_package_size))
 
         self.ask_bdir = time.time()
 
@@ -285,6 +285,7 @@ class Routing_Node_CPU_New(Routing_Node_CPU):
     def bdir_unpack_recv_package(self, data):
         ''' 数据包拆解，应在接收线程内调用 '''
         pack = queue.Queue()
+        if self.unpack_recv_buffer.qsize() > (self.recv_buf_size * 2 * max(self.package_size, self.small_package_size)): return pack
         if not self.bdir: return pack
         data_format = {'id': data['id'], 'param': [], 'time': data['time']}
         ori_node = data['id']

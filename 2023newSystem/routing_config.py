@@ -54,7 +54,7 @@ max_distance_cost = 200
 one_layer_cpu_performance = [0.5, 1.5]
 
 ''' 产生的数据总量(字节大小） '''
-generate_totalSize = 1000
+generate_totalSize = 10000
 
 ''' 不同层产生的数据总量: 倍数关系（非指数级） '''
 diff_layer_generate_totalSize = None  ## 默认与 diff_layers_cpu_performance 一致
